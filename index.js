@@ -1,8 +1,10 @@
+
 const issues = [
   {
     "body": "Instructions say GET /team and POST /newteam. Rspec wants GET/newteam and POST/team.",
     "created_at": "2016-03-31 16:23:13 UTC",
     "comments_count": 0,
+
     "id": 144948778,
     "number": 7,
     "state": "closed",
@@ -9000,3 +9002,25 @@ const issues = [
     "url": "https://api.github.com/repos/learn-co-curriculum/js-donut-lab/issues/2"
   }
 ];
+const issuesWithUpdatedApiUrl = updateApi();
+
+function updateApi(){
+  return issues.map((issue)=>issue.url.replace('api.github.com', 'api-v2.github.com'))
+}
+
+
+let commentCountAccrossIssues = function(){
+  issues.map((issue)=>issue.comments_count).reduce(add)
+}
+
+function add(x, y){
+  return x+ y
+}
+
+nonAutomaticIssues = function(){
+  return issues.filter((issue) => issue.body != "This pull request has been automatically created by learn.co.")
+}
+
+function makeTable(){
+  document.getElementById('results').innerHTML =  nonAutomaticIssues().map((issue)=>`<tr><td>${issue.body}</td><td>${issue.created_at}</td><td>${issue.state}</td></tr>`).join()
+}
